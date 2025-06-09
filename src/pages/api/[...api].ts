@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { createFrameworkApp } from "bknd/adapter";
-import { D1Connection } from "../../lib/D1Connection";
 import { em, entity, text } from "bknd/data";
+import { d1 } from "bknd/adapter/cloudflare";
 
 export const prerender = false;
 
@@ -10,7 +10,7 @@ export const ALL: APIRoute = async (ctx) => {
    const cf = ctx.locals.runtime;
 
    const app = await createFrameworkApp({
-      connection: new D1Connection({ binding: cf.env.DB }),
+      connection: d1({ binding: cf.env.DB }),
       initialConfig: {
          data: em({
             test: entity("test", {
