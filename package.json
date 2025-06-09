@@ -9,6 +9,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.9.1"
+    "@astrojs/cloudflare": "^12.5.4",
+    "astro": "^5.9.1",
+    "bknd": "^0.13.0",
+    "kysely-d1": "^0.4.0"
   }
 }
