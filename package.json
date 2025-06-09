@@ -1,17 +1,18 @@
 {
-  "name": "astro-d1-bknd",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/cloudflare": "^12.5.4",
-    "astro": "^5.9.1",
-    "bknd": "^0.13.0",
-    "kysely-d1": "^0.4.0"
-  }
+   "name": "astro-d1-bknd",
+   "type": "module",
+   "version": "0.0.1",
+   "scripts": {
+      "dev": "astro dev",
+      "build": "astro build",
+      "preview": "astro preview",
+      "astro": "astro",
+      "bknd:assets": "npx bknd copy-assets --out public/bknd --clean"
+   },
+   "dependencies": {
+      "@astrojs/cloudflare": "^12.5.4",
+      "astro": "^5.9.1",
+      "bknd": "^0.13.0",
+      "kysely-d1": "^0.4.0"
+   }
 }
