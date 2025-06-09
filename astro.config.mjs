@@ -11,7 +11,7 @@ export default defineConfig({
    integrations: [
       // config object is optional, just for demo purposes
       bknd({
-         app: {
+         app: (env) => ({
             initialConfig: {
                data: em({
                   test: entity("test", {
@@ -19,7 +19,7 @@ export default defineConfig({
                   }),
                }).toJSON(),
             },
-         },
+         }),
          onBuilt: async (app) => {
             console.log("app built!");
 

@@ -12,20 +12,23 @@ export const onRequest = defineMiddleware(async (context, next) => {
    // @ts-ignore
    const config = context.locals.bknd as unknown as AstroBkndIntegrationOptions;
 
-   const app = await createRuntimeApp({
-      ...config,
-      connection: d1({ binding: cf.env.DB }),
-      onBuilt: async (app) => {
-         app.registerAdminController({
-            assetsPath: "/bknd/",
-            adminBasepath: "/admin",
-            ...config.adminOptions,
-         });
-         if (config.onBuilt) {
-            await config.onBuilt(app);
-         }
+   const app = await createRuntimeApp(
+      {
+         ...config,
+         connection: d1({ binding: cf.env.DB }),
+         onBuilt: async (app) => {
+            app.registerAdminController({
+               assetsPath: "/bknd/",
+               adminBasepath: "/admin",
+               ...config.adminOptions,
+            });
+            if (config.onBuilt) {
+               await config.onBuilt(app);
+            }
+         },
       },
-   });
+      cf.env
+   );
 
    if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/admin")) {
       const response = await app.fetch(request, cf.env);
