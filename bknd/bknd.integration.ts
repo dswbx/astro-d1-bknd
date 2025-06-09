@@ -1,10 +1,14 @@
 import { fileURLToPath } from "url";
 import { join } from "path";
 import type { AstroIntegration } from "astro";
+import type { RuntimeBkndConfig } from "bknd/adapter";
 
-export type AstroBkndIntegration = {};
+export type AstroBkndIntegrationOptions = Pick<
+   RuntimeBkndConfig,
+   "app" | "onBuilt" | "beforeBuild" | "buildConfig" | "adminOptions"
+> & {};
 
-export function bknd(opts?: AstroBkndIntegration): AstroIntegration {
+export function bknd(opts?: AstroBkndIntegrationOptions): AstroIntegration {
    return {
       name: "bknd",
       hooks: {
@@ -23,6 +27,18 @@ export function bknd(opts?: AstroBkndIntegration): AstroIntegration {
             addMiddleware({
                order: "pre",
                entrypoint: join(root, "middleware.ts"),
+            });
+         },
+         "astro:server:setup": ({ server }) => {
+            const clientLocalsSymbol = Symbol.for("astro.locals");
+
+            server.middlewares.use(async function middleware(req, _res, next) {
+               Reflect.set(req, clientLocalsSymbol, {
+                  // @ts-ignore
+                  ...req[clientLocalsSymbol],
+                  bknd: opts,
+               });
+               next();
             });
          },
       },
